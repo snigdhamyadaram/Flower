@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 function Order() {
   const [formData, setFormData] = useState({name: '', qty: '',deliveryInstructions: '',payment:"",shipping:"",isGift:false});
  
@@ -6,16 +7,36 @@ function Order() {
     const {name,value,type,checked}=e.target;
     setFormData({...formData, [name]: type === 'checkbox' ? checked : value});
   }
+   const navigate = useNavigate();
+   
+  useEffect(() => {
+  const user = localStorage.getItem("user");
+
+  if (!user) {
+    navigate("/login");
+  }
+}, [navigate]);
+ 
+
+  const place = () => {
+
+  const user = localStorage.getItem("user");
+      console.log("User:", user);
+  if (!user) {
+    alert("Please login first");
+    navigate("/login");
+    return;
+  }
+
+  alert("Order Placed Successfully");
+};
+
 const submitHandler = (e)=>{
   e.preventDefault();
 
 
     alert("order conformed")
   
-}
-const place = ()=>{
-
-alert("order placed");
 }
 
   return (
@@ -67,7 +88,7 @@ alert("order placed");
         <p> Shipping Method: {formData.shipping}</p>
         <p> Is this a gift? {formData.isGift ? 'Yes' : 'No'}</p>
           </div><br />
-        <button onClick={place} className="bg-green-300 px-6 py-2 rounded-xl border-2 border-black"><i>Place order</i></button>
+        <button type="button" onClick={place} className="bg-green-300 px-6 py-2 rounded-xl border-2 border-black"><i>Place order</i></button>
     </form>
   </div>
 
