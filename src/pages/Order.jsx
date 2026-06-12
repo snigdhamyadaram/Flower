@@ -96,8 +96,8 @@ const submitHandler = (e)=>{
        
        <br />
          
-        <h2 className='text-green'>
-          Kindly confirm the checkout details before submitting the order.
+        <h2 className='text-stone-800'>
+          (❁´◡`❁)Check before submitting the order.
         </h2>
         <p> Name: {formData.name}</p>
         <p> Quantity: {formData.qty}</p>
