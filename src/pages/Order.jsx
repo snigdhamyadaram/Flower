@@ -38,6 +38,15 @@ function Order() {
   }
 
   alert("Order Placed Successfully");
+
+    setFormData({
+    name: "",
+    qty: "",
+    deliveryInstructions: "",
+    payment: "",
+    shipping: "",
+    isGift: false,
+  });
 };
 
 const submitHandler = (e)=>{
