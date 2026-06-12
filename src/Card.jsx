@@ -1,87 +1,84 @@
-import { useState } from "react"
+import { useState } from "react";
 
-const Card = ({flower})=>{
-      if (flower.name === "Orchid") {
+const Card = ({ flower }) => {
+  if (flower.name === "Orchid") {
     throw new Error("Orchid card is intentionally broken");
   }
 
-  
+  const [price, setPrice] = useState(flower.price);
+  const [isWishlist, setWishlist] = useState(false);
+  const [isCart, setIsCart] = useState(false);
 
-    const [price,setPrice]=useState(flower.price);
-    const [isWishlist,setWishlist] = useState(false);
-    const [showConfirmation, setShowConfirmation] = useState(false);
-    const [cartMessage, setCartMessage] = useState("");
+  const disc = (discperc) => {
+    const dis = (price * discperc) / 100;
+    const final = price - dis;
+    setPrice(Math.round(final));
+  };
 
+  const toggle = () => {
+    setWishlist((prev) => !prev);
 
-    const disc=(discperc)=>{
-        const dis = price*discperc/100;
-        const final = price - dis;
-        setPrice(Math.round(final))
+    if (!isWishlist) {
+      alert("Added to Wishlist ❤️");
+    } else {
+      alert("Removed from Wishlist 🤍");
     }
-    const toggle =()=>{
-    setWishlist(prevIswish => !prevIswish);
-     if (!isWishlist) {
-    alert("Added to Wishlist ❤️");
-  } else {
-    alert("Removed from Wishlist 🤍");
-  }
-
-  };
-   const handleAddToCart = () => {
-    setCartMessage("Added To Cart 🛒");
-    setShowConfirmation(true);
   };
 
-  const confirmOrder = () => {
-
-    console.log('Proceeding to order...');
-    
-    setShowConfirmation(false);
+  const handleAddToCart = () => {
+    if (!isCart) {
+      alert("Added To Cart 🛒");
+      setIsCart(true);
+    } else {
+      alert("Removed From Cart ❌");
+      setIsCart(false);
+    }
   };
 
-  const cancelOrder = () => {
-    setShowConfirmation(false); 
-  };
- 
+  return (
+    <div className="carda">
+      <img
+        src={flower.img}
+        alt="product"
+        width="150px"
+        height="130px"
+      />
 
-    return(
-        <div className="carda">
-            <img src={flower.img} alt="product" width="150px" height="130px" >
-            </img>
-            <h2><i>{flower.name}</i></h2>
-            <p> <b>₹{(price)}/-</b></p>
+      <h2>
+        <i>{flower.name}</i>
+      </h2>
 
-            <button onClick={toggle}>
-             {isWishlist ? "❤️" : "🤍"}
-            </button>
-            <br />
-            <br />
+      <p>
+        <b>₹{price}/-</b>
+      </p>
 
-            <button onClick={()=>{disc(flower.disc)}}>
-                {flower.disc}% discount
-            </button>
-            
+      <button onClick={toggle}>
+        {isWishlist ? "❤️" : "🤍"}
+      </button>
 
+      <br />
+      <br />
 
-            <br />
-            
-            <br />
+      <button onClick={() => disc(flower.disc)}>
+        {flower.disc}% Discount
+      </button>
 
-            {flower.stock ? (
-  <>
-    <button onClick={handleAddToCart}>cart</button>
-    {cartMessage && <p>{cartMessage}</p>}
+      <br />
+      <br />
 
-    
-  </>
-) : (
-  <p style={{ color: "red", fontSize: "20px" }}>
-    <b>Out of stock</b>
-  </p>
-)}
-        </div>
-    )
+      {flower.stock ? (
+        <>
+          <button onClick={handleAddToCart}>
+            {isCart ? "Remove from Cart" : "Add to Cart"}
+          </button>
+        </>
+      ) : (
+        <p style={{ color: "red", fontSize: "20px" }}>
+          <b>Out of Stock</b>
+        </p>
+      )}
+    </div>
+  );
+};
 
-
-}
-export default Card
+export default Card;
