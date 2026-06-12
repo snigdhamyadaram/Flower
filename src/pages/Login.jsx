@@ -77,6 +77,14 @@ function Login() {
     localStorage.setItem("user", JSON.stringify(input));
 
   alert("Login Successful");
+
+     setInput({
+    name: "",
+    email: "",
+    number: "",
+  });
+
+  setError({});
   };
 
   return (
