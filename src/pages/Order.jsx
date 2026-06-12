@@ -27,6 +27,15 @@ function Order() {
     navigate("/login");
     return;
   }
+    if (
+    formData.name === "" ||
+    formData.qty === "" ||
+    formData.payment === "" ||
+    formData.shipping === ""
+  ) {
+    alert("Please fill all required fields");
+    return;
+  }
 
   alert("Order Placed Successfully");
 };
